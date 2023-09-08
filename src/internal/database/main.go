@@ -58,9 +58,18 @@ func Add(ctx context.Context, i Item) (string, error) {
 
 func Remove(ctx context.Context, ID string) error {
 
-	//todo
+	input := &dynamodb.DeleteItemInput{
+		Key: map[string]*dynamodb.AttributeValue{
+			"ID": {
+				S: aws.String(ID),
+			},
+		},
+		TableName: aws.String(tableName),
+	}
 
-	return nil
+	_, err := db.DeleteItemWithContext(ctx, input)
+
+	return err
 }
 
 func Get(ctx context.Context, ID string) (Item, error) {

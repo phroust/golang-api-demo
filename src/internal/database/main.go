@@ -64,8 +64,26 @@ func Remove(ctx context.Context, ID string) error {
 }
 
 func Get(ctx context.Context, ID string) (Item, error) {
+	i := Item{}
 
-	//	todo
+	result, err := db.GetItemWithContext(ctx, &dynamodb.GetItemInput{
+		TableName: aws.String(tableName),
+		Key: map[string]*dynamodb.AttributeValue{
+			"ID": {
+				S: aws.String(ID),
+			},
+		},
+	})
 
-	return Item{}, nil
+	if err != nil {
+		return i, err
+	}
+
+	if result.Item == nil {
+		return i, ErrItemNotFound
+	}
+
+	err = dynamodbattribute.UnmarshalMap(result.Item, &i)
+
+	return i, err
 }

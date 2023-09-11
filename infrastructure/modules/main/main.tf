@@ -12,3 +12,18 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
     }
   }
 }
+
+module "database" {
+  source = "../database"
+  name   = var.name
+}
+
+module "api_gateway" {
+  source = "../api_gateway"
+  name   = var.name
+}
+
+module "queue" {
+  source = "../queue"
+  name   = var.name
+}

@@ -23,21 +23,21 @@ resource "aws_lambda_function" "get_item" {
 
   environment {
     variables = {
-      DATABASE_TABLE_NAME = aws_dynamodb_table.this.name
+      DATABASE_TABLE_NAME = module.database.database_name
     }
   }
 }
 
 
 resource "aws_apigatewayv2_integration" "get_item" {
-  api_id = aws_apigatewayv2_api.this.id
+  api_id = module.api_gateway.api_id
 
   integration_type = "AWS_PROXY"
   integration_uri  = aws_lambda_function.get_item.invoke_arn
 }
 
 resource "aws_apigatewayv2_route" "get_handler" {
-  api_id    = aws_apigatewayv2_api.this.id
+  api_id    = module.api_gateway.api_id
   route_key = "GET /item/{itemID}"
 
   target = "integrations/${aws_apigatewayv2_integration.get_item.id}"
@@ -49,5 +49,5 @@ resource "aws_lambda_permission" "get_item" {
   function_name = aws_lambda_function.get_item.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_apigatewayv2_api.this.execution_arn}/*/*"
+  source_arn = "${module.api_gateway.execution_arn}/*/*"
 }

@@ -8,10 +8,10 @@ data "aws_iam_policy_document" "add_item" {
   }
 
   statement {
-    sid = "AllowTableWrite"
-    effect = "Allow"
-    actions = ["dynamodb:PutItem"]
-    resources = [aws_dynamodb_table.this.arn]
+    sid       = "AllowTableWrite"
+    effect    = "Allow"
+    actions   = ["dynamodb:PutItem"]
+    resources = [module.database.database_arn]
   }
 }
 

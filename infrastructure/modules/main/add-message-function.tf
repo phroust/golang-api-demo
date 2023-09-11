@@ -23,21 +23,21 @@ resource "aws_lambda_function" "add_message" {
 
   environment {
     variables = {
-      QUEUE_URL = aws_sqs_queue.this.url
+      QUEUE_URL = module.queue.queue_url
     }
   }
 }
 
 
 resource "aws_apigatewayv2_integration" "add_message" {
-  api_id = aws_apigatewayv2_api.this.id
+  api_id = module.api_gateway.api_id
 
   integration_type = "AWS_PROXY"
   integration_uri  = aws_lambda_function.add_message.invoke_arn
 }
 
 resource "aws_apigatewayv2_route" "post_message_handler" {
-  api_id    = aws_apigatewayv2_api.this.id
+  api_id    = module.api_gateway.api_id
   route_key = "POST /message"
 
   target = "integrations/${aws_apigatewayv2_integration.add_message.id}"
@@ -49,5 +49,5 @@ resource "aws_lambda_permission" "add_message" {
   function_name = aws_lambda_function.add_message.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_apigatewayv2_api.this.execution_arn}/*/*"
+  source_arn = "${module.api_gateway.execution_arn}/*/*"
 }

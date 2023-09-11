@@ -1,3 +1,3 @@
 output "api_url" {
-  value = aws_apigatewayv2_stage.demo.invoke_url
+  value = module.api_gateway.invoke_url
 }

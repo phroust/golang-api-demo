@@ -8,12 +8,12 @@ data "aws_iam_policy_document" "add_message" {
   }
 
   statement {
-    sid     = "AllowMessageSend"
-    effect  = "Allow"
+    sid    = "AllowMessageSend"
+    effect = "Allow"
     actions = [
       "sqs:sendmessage"
     ]
-    resources = [aws_sqs_queue.this.arn]
+    resources = [module.queue.queue_arn]
   }
 }
 

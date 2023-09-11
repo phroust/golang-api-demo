@@ -3,7 +3,7 @@ resource "aws_dynamodb_table" "this" {
 
   billing_mode = "PAY_PER_REQUEST"
 
-  hash_key       = "ID"
+  hash_key = "ID"
 
   attribute {
     name = "ID"

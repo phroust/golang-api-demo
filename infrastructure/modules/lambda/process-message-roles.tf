@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "process_message" {
       "sqs:DeleteMessage",
       "sqs:GetQueueAttributes"
     ]
-    resources = [module.queue.queue_arn]
+    resources = [data.aws_sqs_queue.this.arn]
   }
 
   statement {
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "process_message" {
       "kms:GenerateDataKey",
       "kms:Decrypt"
     ]
-    resources = [module.kms.key_arn]
+    resources = [var.kms_key_arn]
   }
 }
 

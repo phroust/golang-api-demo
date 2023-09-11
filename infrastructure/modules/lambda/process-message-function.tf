@@ -2,7 +2,7 @@ resource "aws_cloudwatch_log_group" "process_message" {
   name              = "/aws/lambda/${aws_lambda_function.process_message.function_name}"
   retention_in_days = 14
 
-  kms_key_id = module.kms.key_arn
+  kms_key_id = var.kms_key_arn
 }
 
 
@@ -23,7 +23,7 @@ resource "aws_lambda_function" "process_message" {
 }
 
 resource "aws_lambda_event_source_mapping" "process_message" {
-  event_source_arn = module.queue.queue_arn
+  event_source_arn = data.aws_sqs_queue.this.arn
   enabled          = true
   function_name    = aws_lambda_function.process_message.arn
   batch_size       = 10

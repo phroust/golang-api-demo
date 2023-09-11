@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "add_message" {
     actions = [
       "sqs:sendmessage"
     ]
-    resources = [module.queue.queue_arn]
+    resources = [data.aws_sqs_queue.this.arn]
   }
 
   statement {
@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "add_message" {
       "kms:GenerateDataKey",
       "kms:Decrypt"
     ]
-    resources = [module.kms.key_arn]
+    resources = [var.kms_key_arn]
   }
 }
 

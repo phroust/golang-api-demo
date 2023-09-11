@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "add_item" {
     sid       = "AllowTableWrite"
     effect    = "Allow"
     actions   = ["dynamodb:PutItem"]
-    resources = [module.database.database_arn]
+    resources = [data.aws_dynamodb_table.this.arn]
   }
 }
 

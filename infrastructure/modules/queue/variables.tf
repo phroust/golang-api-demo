@@ -7,3 +7,14 @@ variable "name" {
     error_message = "The name must only contain [a-z0-9]."
   }
 }
+
+variable "max_receive_count" {
+  type = number
+  description = "Try to process a message x times before giving up and sending it to the deadletter queue"
+  default = 5
+
+  validation {
+    condition     = var.max_receive_count > 0
+    error_message = "The value for maxReceiveCount must be greater than 0"
+  }
+}

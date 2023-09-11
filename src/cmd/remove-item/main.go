@@ -16,7 +16,13 @@ func LambdaHandler(ctx context.Context, req events.APIGatewayProxyRequest) (even
 
 	resp := events.APIGatewayProxyResponse{}
 
-	err := database.Remove(ctx, req.PathParameters["itemID"])
+	id := req.PathParameters["itemID"]
+	if id == "" {
+		resp.StatusCode = http.StatusBadRequest
+		return resp, nil
+	}
+
+	err := database.Remove(ctx, id)
 	if err != nil {
 		resp.StatusCode = http.StatusInternalServerError
 

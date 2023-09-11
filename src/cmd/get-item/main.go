@@ -16,7 +16,13 @@ func LambdaHandler(ctx context.Context, req events.APIGatewayProxyRequest) (even
 
 	resp := events.APIGatewayProxyResponse{}
 
-	item, err := database.Get(ctx, req.PathParameters["itemID"])
+	id := req.PathParameters["itemID"]
+	if id == "" {
+		resp.StatusCode = http.StatusBadRequest
+		return resp, nil
+	}
+
+	item, err := database.Get(ctx, id)
 	if err == database.ErrItemNotFound {
 		resp.StatusCode = http.StatusNotFound
 		return resp, nil

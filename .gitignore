@@ -39,3 +39,6 @@ terraform.rc
 
 out/*
 !out/.doNotDelete
+
+.aws-sam/
+.aws-sam-iacs/

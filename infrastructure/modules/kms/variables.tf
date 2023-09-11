@@ -7,8 +7,3 @@ variable "name" {
     error_message = "The name must only contain [a-z0-9]."
   }
 }
-
-variable "kms_key_arn" {
-  type        = string
-  description = "The ARN of the KMS key that will be used to encrypt logs"
-}

@@ -2,7 +2,7 @@ resource "aws_cloudwatch_log_group" "add_item" {
   name              = "/aws/lambda/${aws_lambda_function.add_item.function_name}"
   retention_in_days = 14
 
-  # todo: KMS
+  kms_key_id = module.kms.key_arn
 }
 
 

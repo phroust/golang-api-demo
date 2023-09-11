@@ -17,6 +17,16 @@ data "aws_iam_policy_document" "process_message" {
     ]
     resources = [module.queue.queue_arn]
   }
+
+  statement {
+    sid    = "AllowKeyRead"
+    effect = "Allow"
+    actions = [
+      "kms:GenerateDataKey",
+      "kms:Decrypt"
+    ]
+    resources = [module.kms.key_arn]
+  }
 }
 
 resource "aws_iam_policy" "process_message" {

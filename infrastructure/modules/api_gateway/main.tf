@@ -3,7 +3,7 @@ resource "aws_cloudwatch_log_group" "api" {
 
   retention_in_days = 30
 
-  # todo kms
+  kms_key_id = var.kms_key_arn
 }
 
 resource "aws_apigatewayv2_api" "this" {

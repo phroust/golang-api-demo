@@ -2,7 +2,7 @@ resource "aws_cloudwatch_log_group" "remove_item" {
   name              = "/aws/lambda/${aws_lambda_function.remove_item.function_name}"
   retention_in_days = 14
 
-  # todo: KMS
+  kms_key_id = module.kms.key_arn
 }
 
 

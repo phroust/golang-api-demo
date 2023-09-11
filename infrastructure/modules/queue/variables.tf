@@ -9,12 +9,17 @@ variable "name" {
 }
 
 variable "max_receive_count" {
-  type = number
+  type        = number
   description = "Try to process a message x times before giving up and sending it to the deadletter queue"
-  default = 5
+  default     = 5
 
   validation {
     condition     = var.max_receive_count > 0
     error_message = "The value for maxReceiveCount must be greater than 0"
   }
+}
+
+variable "kms_key_arn" {
+  type        = string
+  description = "The ARN of the KMS key that will be used to encrypt messages in the queue"
 }
